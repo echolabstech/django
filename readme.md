@@ -1,1 +1,1 @@
-Editor - Major Sapp III
+Editor: Major Sapp III
