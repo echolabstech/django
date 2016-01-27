@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
+from .models import Post
 
 def post_create(request):
 	return HttpResponse('<h1>Create</h1>')
@@ -14,9 +15,11 @@ def post_detail(request):
 def post_list(request):
 	if request.user.is_authenticated():
 		uname = request.user.username
+		queryset = Post.objects.all()
 		context = {
 			'title' : 'Hi {}'.format(uname),
-			'h1' : 'Welcome to your list {}'.format(uname)
+			'h1' : 'Welcome to your list {}'.format(uname),
+			'list' : queryset,
 	 	}
  	else:
  		context = {
