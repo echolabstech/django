@@ -1,4 +1,5 @@
-.sqlite*
-.tmp
-.swp
-.swap
+*.sqlite3
+*.tmp
+*.swp
+*.swap
+*.pyc
