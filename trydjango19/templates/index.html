@@ -9,7 +9,7 @@
 	{% for obj in list %}
 	<p>
 		{{ obj.id }}
-		{{ obj.title }}
+		<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
 		{{ obj.content }}
 		{{ obj.timestamp }}
 		{{ obj.updated }}
