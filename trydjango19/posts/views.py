@@ -1,5 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import HttpResponse, get_object_or_404
+from django.shortcuts import (
+	render,
+	HttpResponse,
+	HttpResponseRedirect,
+	get_object_or_404,
+)
 
 from .models import Post
 
@@ -10,13 +14,15 @@ def post_create(request):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
+		return HttpResponseRedirect(instance.get_absolute_url())
+
 	context = {
 		'form' : form,
 	}
 	return render(request, 'post_form.html', context)
 
 def post_detail(request, id=None):
-	instance = get_object_or_404 (Post, id=id)
+	instance = get_object_or_404(Post, id=id)
 	context = {
 		'title' : 'Details',
 		'instance' : instance,
@@ -39,8 +45,19 @@ def post_list(request):
 	 	}
 	return render(request, 'index.html', context)
 
-def post_update(request):
-	return HttpResponse('<h1>Update</h1>')
+def post_update(request, id=None):
+	instance = get_object_or_404(Post, id=id)
+	form = PostForm(request.POST or None, instance=instance)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		instance.save()
+		return HttpResponseRedirect(instance.get_absolute_url())
+
+	context = {
+		'form' : form,
+		'instance': instance,
+	}
+	return render(request, 'post_form.html', context)
 
 def post_delete(request):
 	return HttpResponse('<h1>Delete</h1>')
